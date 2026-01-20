@@ -68,7 +68,7 @@ def fetch_hourly_water_level(obscd: str, start_date: str, end_date: str) -> pd.D
 
 
 def normalize_datetime_columns(df: pd.DataFrame) -> pd.DataFrame:
-    candidate_cols = [col for col in df.columns if "ymdh" in col.lower() or "ymd" in col.lower()]
+    candidate_cols = [col for col in df.columns if "wl" in col.lower() or "wl" in col.lower()]
     for col in candidate_cols:
         dt_values = df[col].astype(str).apply(_safe_to_datetime)
         if dt_values.notna().any():
@@ -107,11 +107,11 @@ def summarize_metrics(y_true: pd.Series, y_pred: Iterable[float]) -> dict:
 
 st.set_page_config(page_title="Uiryeong WAMIS Water Level", layout="wide")
 
-st.title("의령 WAMIS 수위 데이터 조회 및 GBM/RF 해석")
+st.title("WAMIS 수위 데이터 조회 및 머신러닝(GBM/RF) 해석 Tool")
 
 st.markdown(
     """
-이 앱은 WAMIS OpenAPI에서 의령 지역 수위 데이터를 조회하고,
+이 앱은 WAMIS OpenAPI를 기반으로 수위 데이터를 조회하고,
 8:2 학습/검증 분할로 Gradient Boosting과 Random Forest 모델을 비교합니다.
 """
 )
@@ -129,7 +129,7 @@ with st.sidebar:
     default_start = dt.date.today() - dt.timedelta(days=7)
     start_date = st.date_input("시작일", value=default_start)
     end_date = st.date_input("종료일", value=dt.date.today())
-    station_filter = st.text_input("관측소 필터", value="의령")
+    station_filter = st.text_input("관측소 필터", value="금강")
     fetch_button = st.button("관측소 목록 불러오기")
 
     st.header("모델 설정")
