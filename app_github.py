@@ -240,7 +240,7 @@ if st.session_state.water_data is not None:
             st.line_chart(comparison, use_container_width=True)
 
             st.subheader("모델 저장/불러오기")
-            model_name = st.text_input("모델 이름", value="uiryeong_model", key="model_name")
+            model_name = st.text_input("모델 이름", value="ML_model", key="model_name")
             save_model = st.button("모델 저장", key="save_model")
             load_model = st.button("모델 불러오기", key="load_model")
 
